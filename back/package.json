@@ -1,0 +1,28 @@
+{
+  "name": "mbt-backend",
+  "version": "1.0.0",
+  "description": "빗썸 블록체인 부트캠프 1기 4팀 백엔드 프로젝트",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/server.ts",
+    "start:watch": "nodemon --watch '/src/**/*.ts' --exec 'ts-node' src/server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "mysql2": "^2.3.3",
+    "typeorm": "^0.2.43",
+    "web3": "^1.7.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.19",
+    "nodemon": "^2.0.15",
+    "pm2": "^5.2.0",
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
+  }
+}

@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "strict": true,
+        "outDir": "dist",
+        "lib": ["es6"],
+        "esModuleInterop": true,
+        "useUnknownInCatchVariables": false,
+        "experimentalDecorators": true,
+        "strictPropertyInitialization": false
+    },
+    "include": [
+        "src/**/*.ts",
+        "tests/**/*.ts"
+    ]
+}

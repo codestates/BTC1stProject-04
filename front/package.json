@@ -1,0 +1,12 @@
+{
+  "name": "mbt-frontend",
+  "version": "1.0.0",
+  "description": "빗썸 블록체인 부트캠프 1기 4팀 프론트엔드 프로젝트",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
