@@ -7,7 +7,7 @@
     ```bash
     PORT=4004
     DATABASE_HOST=localhost
-    DATABASE_USER=mbt
+    DATABASE_USERNAME=mbt
     DATABASE_PASSWORD=mbt04
     DATABASE_DATABASE=bithumb
     DATABASE_PORT=3306
