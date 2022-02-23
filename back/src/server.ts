@@ -35,24 +35,27 @@ app.use('/blocks', BlockRouters);
 
 
 // server run
-createConnection(typeormConfig).then(async () => {
-  console.log('database connected');
-  try {
-    const nodeConnection = await ethereum.net.isListening();
-    if (!nodeConnection) {
-      throw new Error(`nodeConnection: ${nodeConnection}`);
-    }
-  } catch(err) {
-    console.error(err);
-    throw new Error('node is not connected!');
-  }
+// createConnection(typeormConfig).then(async () => {
+//   console.log('database connected');
+//   try {
+//     const nodeConnection = await ethereum.net.isListening();
+//     if (!nodeConnection) {
+//       throw new Error(`nodeConnection: ${nodeConnection}`);
+//     }
+//   } catch(err) {
+//     console.error(err);
+//     throw new Error('node is not connected!');
+//   }
   
-  app.listen(port, () => {
+//   app.listen(port, () => {
+//     console.log(`server start on ${port}`);
+//   });
+// }).catch(e => {
+//   console.error(e);
+//   throw new Error(e);
+// });
+
+app.listen(port, () => {
     console.log(`server start on ${port}`);
   });
-}).catch(e => {
-  console.error(e);
-  throw new Error(e);
-});
-
 
