@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  mysql:
+    image: mysql:8
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bithumb
+      MYSQL_USER: mbt
+      MYSQL_PASSWORD: mbt04
+
+  # moonbeamLocalClient:
+  #   image: purestake/moonbeam:v0.20.1
+  #   restart: always
+  #   ports:
+  #     - "9933:9933"
+  #     - "9944:9944"
+

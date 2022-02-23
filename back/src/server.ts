@@ -4,7 +4,7 @@ import {createConnection} from 'typeorm';
 import {typeormConfig} from './typeorm/config';
 import {HttpError} from './utils/httpError';
 import AllRouters from './routers';
-import PNRouters from './routers/privateNetwork';
+import LNRouters from './routers/localNetwork';
 import {ethereum} from './utils/web3';
 
 dotenv.config();
@@ -27,7 +27,7 @@ app.use((error: HttpError, _req: express.Request, res: express.Response, _next: 
 });
 
 app.use('/', AllRouters);
-app.use('/pn', PNRouters);
+app.use('/ln', LNRouters);
 
 // server run
 createConnection(typeormConfig).then(async () => {
