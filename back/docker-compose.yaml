@@ -12,10 +12,10 @@ services:
       MYSQL_USER: mbt
       MYSQL_PASSWORD: mbt04
 
-  # moonbeamLocalClient:
-  #   image: purestake/moonbeam:v0.20.1
-  #   restart: always
-  #   ports:
-  #     - "9933:9933"
-  #     - "9944:9944"
-
+  moonbeamLocalClient:
+    image: purestake/moonbeam:v0.20.1
+    restart: always
+    ports:
+      - "9933:9933"
+      - "9944:9944"
+    command: --dev --ws-external --rpc-external
