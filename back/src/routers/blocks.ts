@@ -17,26 +17,26 @@ router.get('/:blockNumber', async function(req: Request, res: Response, next: Ne
   try {
     const block = await MoonbeamBlockEntity.findOne({number: +blockNumber});
     if(block){
-      res.send(block);
+      return res.send(block);
     }
 
     const blockInfo = await ethereum.getBlock(blockNumber);
-      if(!blockInfo){
-        return next(new BadRequest('잘못된 블럭 번호입니다.'));
-      }
+    if(!blockInfo){
+      return next(new BadRequest('잘못된 블럭 번호입니다.'));
+    }
 
-      const blockInDb = MoonbeamBlockEntity.create({
-        number: blockInfo.number,
-        hash: blockInfo.hash,
-        miner: blockInfo.miner,
-        extraData: blockInfo.extraData,
-        gasLimit: blockInfo.gasLimit,
-        gasUsed: blockInfo.gasUsed,
-        baseFeePerGas: blockInfo.baseFeePerGas
-      });
-      await blockInDb.save();
+    const blockInDb = MoonbeamBlockEntity.create({
+      number: blockInfo.number,
+      hash: blockInfo.hash,
+      miner: blockInfo.miner,
+      extraData: blockInfo.extraData,
+      gasLimit: blockInfo.gasLimit,
+      gasUsed: blockInfo.gasUsed,
+      baseFeePerGas: blockInfo.baseFeePerGas
+    });
+    await blockInDb.save();
 
-      res.send(block);
+    res.send(blockInDb);
   } catch(err) {
     console.log(err);
     throw new Error(err);

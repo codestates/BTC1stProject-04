@@ -63,7 +63,7 @@ router.get('/:transactionId', async function(req: Request, res: Response, next: 
   try {
     const transaction = await MoonbeamTransactionEntity.findOne({hash: transactionId});
     if(transaction){
-      res.send({ transaction: transaction });
+      return res.send({ transaction });
     }
 
     const transactionInfo = await ethereum.getTransaction(transactionId);
@@ -81,7 +81,7 @@ router.get('/:transactionId', async function(req: Request, res: Response, next: 
     });
     await transactionInDb.save();
     
-    res.send({ transaction: transactionInfo });
+    res.send({ transaction: transactionInDb });
   } catch(err) {
     console.log(err);
     throw new Error(err);
