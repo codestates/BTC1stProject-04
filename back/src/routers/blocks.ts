@@ -32,7 +32,8 @@ router.get('/:blockNumber', async function(req: Request, res: Response, next: Ne
       extraData: blockInfo.extraData,
       gasLimit: blockInfo.gasLimit,
       gasUsed: blockInfo.gasUsed,
-      baseFeePerGas: blockInfo.baseFeePerGas
+      baseFeePerGas: blockInfo.baseFeePerGas,
+      transactions: blockInfo.transactions
     });
     await blockInDb.save();
 
