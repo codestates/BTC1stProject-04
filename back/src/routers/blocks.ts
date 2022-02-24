@@ -20,13 +20,12 @@ router.get('/:blockNumber', async function(req: Request, res: Response, next: Ne
       res.send(block);
     }
 
-    await getManager().transaction(async entityManager => {
-      const blockInfo = await ethereum.getBlock(blockNumber);
+    const blockInfo = await ethereum.getBlock(blockNumber);
       if(!blockInfo){
         return next(new BadRequest('잘못된 블럭 번호입니다.'));
       }
 
-      const block = MoonbeamBlockEntity.create({
+      const blockInDb = MoonbeamBlockEntity.create({
         number: blockInfo.number,
         hash: blockInfo.hash,
         miner: blockInfo.miner,
@@ -35,10 +34,9 @@ router.get('/:blockNumber', async function(req: Request, res: Response, next: Ne
         gasUsed: blockInfo.gasUsed,
         baseFeePerGas: blockInfo.baseFeePerGas
       });
-      await entityManager.save(MoonbeamBlockEntity, block);
+      await blockInDb.save();
 
       res.send(block);
-    });
   } catch(err) {
     console.log(err);
     throw new Error(err);

@@ -35,18 +35,16 @@ router.post('/', async function(req: Request, res: Response, next: NextFunction)
 
     const createReceipt = await ethereum.sendSignedTransaction(createTransaction.rawTransaction!);
     
-    await getManager().transaction(async entityManager => {
-      const transactionInfo = await ethereum.getTransaction(createReceipt.transactionHash);
-      const transaction = MoonbeamTransactionEntity.create({
-        blockNumber: transactionInfo.blockNumber,
-        hash: createReceipt.transactionHash,
-        from: transactionInfo.from,
-        to: transactionInfo.to,
-        value: transactionInfo.value,
-        gasPrice: transactionInfo.gasPrice
-      });
-      await entityManager.save(MoonbeamTransactionEntity, transaction);
+    const transactionInfo = await ethereum.getTransaction(createReceipt.transactionHash);
+    const transactionInDb = MoonbeamTransactionEntity.create({
+      blockNumber: transactionInfo.blockNumber,
+      hash: createReceipt.transactionHash,
+      from: transactionInfo.from,
+      to: transactionInfo.to,
+      value: transactionInfo.value,
+      gasPrice: transactionInfo.gasPrice
     });
+    await transactionInDb.save();
 
     res.send({ transactionHash: createReceipt.transactionHash });
   } catch(err) {
@@ -68,24 +66,22 @@ router.get('/:transactionId', async function(req: Request, res: Response, next: 
       res.send({ transaction: transaction });
     }
 
-    await getManager().transaction(async entityManager => {
-      const transactionInfo = await ethereum.getTransaction(transactionId);
-      if(!transactionInfo){
-        return next(new BadRequest('잘못된 트랜잭션 아이디 입니다.'));
-      }
+    const transactionInfo = await ethereum.getTransaction(transactionId);
+    if(!transactionInfo){
+      return next(new BadRequest('잘못된 트랜잭션 아이디 입니다.'));
+    }
       
-      const transaction = MoonbeamTransactionEntity.create({
-        blockNumber: transactionInfo.blockNumber,
-        hash: transactionId,
-        from: transactionInfo.from,
-        to: transactionInfo.to,
-        value: transactionInfo.value,
-        gasPrice: transactionInfo.gasPrice
-      });
-      await entityManager.save(MoonbeamTransactionEntity, transaction);
-      
-      res.send({ transaction: transactionInfo });
+    const transactionInDb = MoonbeamTransactionEntity.create({
+      blockNumber: transactionInfo.blockNumber,
+      hash: transactionId,
+      from: transactionInfo.from,
+      to: transactionInfo.to,
+      value: transactionInfo.value,
+      gasPrice: transactionInfo.gasPrice
     });
+    await transactionInDb.save();
+    
+    res.send({ transaction: transactionInfo });
   } catch(err) {
     console.log(err);
     throw new Error(err);
