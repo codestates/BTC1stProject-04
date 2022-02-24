@@ -43,25 +43,44 @@
 ## APIS
  - /
    - / (get) : healthcheck
+
    - /network (get) : 연결된 블록체인네트워크 정보 겟
+      - 사용처: 이더스캔) 기본적인 네트워크 정보
+      - output: {chainId: number, node: string, blockNumber: number, currentBlock: BlockEntity}
+
    - /faucet/:accountAddress (get) : 로컬넷인 경우, 타겟 주소에 100eth 보냄
-      - 사용처: 로그인한 화면 (계정에 테스트 이더 넣는 버튼 하나 만들기)
+      - 사용처: 월렛) 로그인후 화면 ~ 계정에 테스트 이더 넣는 버튼
       - input: params: {accountAddress: account주소}
       - output: {account: string, balance: string}
 
+
  - /wallets:
    - / (post) : 지갑(계정) 생성 - 로그인 아이디, 비밀번호, pk, account 생성 - 니모닉키 반환
-      - body: {username: string, password: string}
+      - 사용처: 월렛) 계정 생성하는 페이지 (니모닉만 던져줌)
+      - input: body: {username: string, password: string}
+      - output: body: {mnemonic: string}
+
    - /login (post) : 아이디, 비밀번호로 지갑 계정에 로그인
-      - body: {username: string, password: string}
+      - 사용처: 월렛) 계정 로그인 페이지 (리턴값(계정정보)으로 로그인 후 페이지 구현)
+      - input: body: {username: string, password: string}
+      - output: body: {accounts: [{ AccountEntity }]}
+
    - /find (post) : 니모닉으로 계정 찾고, 비밀번호 바로 변경
-      - body: {mnemonic: string, passwordToChange: string}
+      - 사용처: 월렛) 니모닉과 변경할 비밀번호로, 잃어버린 계정정보 되찾음 (로그인 아이디 리턴) - 아이디 보여주면서 재로그인 하라고 유도
+      - input: body: {mnemonic: string, passwordToChange: string}
+      - output: body: {username: string}
+
 
  - /accounts:
    - /:accountAddress (get) : 생성한 특정 계정정보 겟
-      - params: {accountAddress: account주소}
+      - 사용처: 이더스캔) 특정 계좌 주소 정보 조회
+      - input: params: {accountAddress: account주소}
+      - output: body: {accounts: AccountEntity }
+
    - /:accountAddress/balance (get) : 특정 계정의 잔액정보 겟
-      - params: {accountAddress: account주소}
+      - 사용처: ?
+      - input: params: {accountAddress: account주소}
+      - output: body: {balance: string }
 
  - /transactions:
    - / (post): 트랜잭션 생성
