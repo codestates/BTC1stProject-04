@@ -62,7 +62,11 @@
       - params: {accountAddress: account주소}
 
  - transactions:
-   - 
+   - / (post): 트랜잭션 생성
+      - body: {addressFrom: string, addressTo: string, amount: string | number}
+   - /:transactionId (get): 특정 트랜잭션의 정보 겟
+      - params: {transactionId: 트랜잭션 주소}
 
  - blocks:
-   - 
+   - /:blockNumber (get): 특정 블록의 정보 겟
+      - params: {blockNumber: 블럭 번호}
