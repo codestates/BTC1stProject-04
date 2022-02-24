@@ -84,10 +84,16 @@
 
  - /transactions:
    - / (post): 트랜잭션 생성
-      - body: {addressFrom: string, addressTo: string, amount: string | number}
+      - 사용처: 송금 기능에 사용
+      - input(body): {addressFrom: string, addressTo: string, amount: string | number}
+      - output: 생성된 트랜잭션의 hash
    - /:transactionId (get): 특정 트랜잭션의 정보 겟
-      - params: {transactionId: 트랜잭션 주소}
+      - 사용처: 익스플로러에서 특정 트랜잭션의 정보를 보여줄 때 사용
+      - input(params): {transactionId: 트랜잭션 주소}
+      - output: MoonbeamTransactionEntity (`src/entities/transaction.entity.ts`)
 
  - /blocks:
    - /:blockNumber (get): 특정 블록의 정보 겟
-      - params: {blockNumber: 블럭 번호}
+      - 사용처: 익스플로러에서 특정 블록의 정보를 보여줄 때 사용
+      - input(params): {blockNumber: 블럭 번호}
+      - output: MoonbeamBlockEntity (`src/entities/block.entity.ts`)
