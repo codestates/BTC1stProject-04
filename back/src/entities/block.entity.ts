@@ -6,7 +6,7 @@ export class MoonbeamBlockEntity extends BaseEntity implements MoonbeamBlock {
   @PrimaryGeneratedColumn({type: 'bigint', unsigned: true})
   id: string;
 
-  @Column('number', {comment: '블럭 번호'})
+  @Column('int', {comment: '블럭 번호'})
   number: number;
 
   @Column('varchar', {comment: '블록해시'})
@@ -18,13 +18,13 @@ export class MoonbeamBlockEntity extends BaseEntity implements MoonbeamBlock {
   @Column('varchar', {comment: '추가 데이터'})
   extraData: string;
   
-  @Column('number', {comment: 'Gas Limit'})
+  @Column('int', {comment: 'Gas Limit'})
   gasLimit: number;
 
-  @Column('number', {comment: '사용된 가스'})
+  @Column('int', {comment: '사용된 가스'})
   gasUsed: number;
 
-  @Column('number', {comment: '가스 당 비용'})
+  @Column('int', {comment: '가스 당 비용'})
   baseFeePerGas?: number;
   
   @CreateDateColumn()
