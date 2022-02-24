@@ -83,5 +83,38 @@ router.post('/login', async function(req: Request, res: Response, next: NextFunc
   }
 });
 
+// 니모닉으로 계정 찾아 비밀번호 변경
+router.post('/find', async function(req: Request, res: Response, next: NextFunction) {
+  const {mnemonic, passwordToChange} = req.body;
+  if (!mnemonic) {
+    return next(new BadRequest('니모닉이 없습니다.'))
+  } else if (mnemonic.split(' ').length !== 12) {
+    return next(new BadRequest('잘못된 형식의 니모닉입니다.'))
+  } else if (!passwordToChange) {
+    return next(new BadRequest('변경할 비밀번호가 없습니다.'))
+  }
+
+  try {
+    const walletInfo = ethers.Wallet.fromMnemonic(mnemonic);
+
+    const wallet = await WalletEntity.findOne({
+      where: {praivateKey: walletInfo.privateKey}
+    });
+    if (!wallet) {
+      return next(new BadRequest('잘못된 니모닉입니다.'))
+    }
+
+    const {encryptedPassword, salt} = AuthService.createEncryptedPasswordAndSalt(passwordToChange);
+    wallet.password = encryptedPassword;
+    wallet.salt = salt;
+    await wallet.save();
+
+    res.send({ username: wallet.username });
+  } catch(err) {
+    console.error(err);
+    return next(err);
+  }
+});
+
 
 export default router;
