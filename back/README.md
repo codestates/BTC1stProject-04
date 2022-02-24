@@ -37,5 +37,26 @@
 ## 설계방향
  - 기본 서버 기능 구현
     - 서버 프레임워크: express
-    - ORM: typeorm
+    - ORM: typeorm (active-record)
     - DB: mysql8
+
+## APIS
+ - /
+   - / (get) : healthcheck
+   - /network (get) : 연결된 블록체인네트워크 정보 겟
+   - /faucet/:accountAddress (get) : 로컬넷인 경우, 타겟 주소에 100eth 보냄
+
+ - wallets:
+   - / (post) : 지갑(계정) 생성 - 로그인 아이디, 비밀번호, pk, account 생성 - 니모닉키 반환
+   - /login (post) : 아이디, 비밀번호로 지갑 계정에 로그인
+   - /find (post) : 니모닉으로 계정 찾고, 비밀번호 바로 변경
+
+ - accounts:
+   - /:accountAddress (get) : 생성한 특정 계정정보 겟
+   - /:accountAddress/balance (get) : 특정 계정의 잔액정보 겟
+
+ - transactions:
+   - 
+
+ - blocks:
+   - 
