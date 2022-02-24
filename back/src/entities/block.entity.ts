@@ -24,8 +24,11 @@ export class MoonbeamBlockEntity extends BaseEntity implements MoonbeamBlock {
   @Column('int', {comment: '사용된 가스'})
   gasUsed: number;
 
-  @Column('int', {comment: '가스 당 비용'})
+  @Column('int', {nullable: true, comment: '가스 당 비용'})
   baseFeePerGas?: number;
+
+  @Column('simple-array', {nullable: true, comment: '블록에 담긴 트랜잭션들'})
+  transactions: string[];
   
   @CreateDateColumn()
   createdAt: Date;
