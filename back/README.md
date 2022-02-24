@@ -45,7 +45,9 @@
    - / (get) : healthcheck
    - /network (get) : 연결된 블록체인네트워크 정보 겟
    - /faucet/:accountAddress (get) : 로컬넷인 경우, 타겟 주소에 100eth 보냄
-      - params: {accountAddress: account주소}
+      - 사용처: 로그인한 화면 (계정에 테스트 이더 넣는 버튼 하나 만들기)
+      - input: params: {accountAddress: account주소}
+      - output: {account: string, balance: string}
 
  - /wallets:
    - / (post) : 지갑(계정) 생성 - 로그인 아이디, 비밀번호, pk, account 생성 - 니모닉키 반환
