@@ -5,6 +5,7 @@ import {typeormConfig} from './typeorm/config';
 import {HttpError} from './utils/httpError';
 import AllRouters from './routers';
 import AccountRouters from './routers/accounts';
+import WalletRouters from './routers/wallets';
 import TransactionRouters from './routers/transactions';
 import BlockRouters from './routers/blocks';
 import {ethereum} from './utils/web3';
@@ -17,19 +18,10 @@ const app = express();
 
 app.use(express.json()); 
 app.use(express.urlencoded({ extended : false }));
-app.use((error: HttpError, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  const code = error.status || 500;
-  const message = error.message || 'Internal Server Error';
-  res.status(code);
-  res.send({
-    code,
-    message,
-    info: error.info,
-  });
-});
 
 app.use('/', AllRouters);
 app.use('/accounts', AccountRouters);
+app.use('/wallets', WalletRouters);
 app.use('/transactions', TransactionRouters);
 app.use('/blocks', BlockRouters);
 
@@ -53,4 +45,15 @@ createConnection(typeormConfig).then(async () => {
 }).catch(e => {
   console.error(e);
   throw new Error(e);
+});
+
+app.use((error: HttpError, req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  const code = error.status || 500;
+  const message = error.message || 'Internal Server Error';
+  res.status(code);
+  res.send({
+    code,
+    message,
+    info: error.info,
+  });
 });

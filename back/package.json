@@ -15,7 +15,9 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.0",
+    "ethers": "^5.5.4",
     "express": "^4.17.3",
+    "moment": "^2.29.1",
     "mysql2": "^2.3.3",
     "typeorm": "^0.2.43",
     "web3": "^1.7.0"
