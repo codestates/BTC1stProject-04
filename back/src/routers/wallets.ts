@@ -3,6 +3,7 @@ import {getManager} from 'typeorm';
 import {ethers} from 'ethers';
 import {AccountEntity, WalletEntity} from '../entities';
 import AuthService from '../services/auth.service';
+import {ethereum} from '../utils/web3';
 import {BadRequest} from '../utils/httpError';
 
 const router = express.Router();
@@ -74,6 +75,12 @@ router.post('/login', async function(req: Request, res: Response, next: NextFunc
     const correctPassword = AuthService.comparePassword(password, wallet.password, wallet.salt);
     if (!correctPassword) {
       return next(new BadRequest('비밀번호가 다릅니다.'))
+    }
+
+    if (wallet.accounts) {
+      for await (const account of wallet.accounts) {
+        account.balance = await ethereum.getBalance(account.account);
+      }
     }
 
     res.send({ accounts: wallet.accounts });

@@ -20,7 +20,7 @@ router.get('/network', async function(req: Request, res: Response, next: NextFun
   
     const currentBlock = await ethereum.getBlock(blockNumber);
 
-    res.send({ chainId, node, currentBlock });
+    res.send({ chainId, node, blockNumber, currentBlock });
   } catch(err) {
     console.log(err);
     throw new Error(err);
