@@ -18,7 +18,8 @@ export default async function main() {
   while (1) {
     const targetBlock = await MoonbeamTestnetBlockEntity.findOne({where: {number: startBlockNumber}});
     if (!targetBlock) {
-      throw new Error(`${targetBlock} : block 정보가 없습니다!`);
+      console.log(startBlockNumber, 'block empty!')
+      break;
     }
 
     const {transactions} = targetBlock;
