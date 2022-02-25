@@ -23,7 +23,7 @@ export default async function main() {
 
     // 데이터 존재하는 다음부터 스크랩핑 시작
     const targetIndex = transactions.findIndex((txId) => {
-      if (txId === latestTransactionInDb.hash) {
+      if (latestTransactionInDb && txId === latestTransactionInDb.hash) {
         return true;
       }
     })
