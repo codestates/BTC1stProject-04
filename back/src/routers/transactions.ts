@@ -1,6 +1,4 @@
-import express from 'express';
-import { NextFunction, Request, Response } from 'express';
-import { getManager } from 'typeorm';
+import express, { NextFunction, Request, Response } from 'express';
 import { MoonbeamTransactionEntity, WalletEntity } from '../entities';
 import { BadRequest } from '../utils/httpError';
 import { ethereum } from '../utils/web3';

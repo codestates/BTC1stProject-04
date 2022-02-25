@@ -8,6 +8,7 @@ import AccountRouters from './routers/accounts';
 import WalletRouters from './routers/wallets';
 import TransactionRouters from './routers/transactions';
 import BlockRouters from './routers/blocks';
+import ExplorerRouters from './routers/explorer';
 import {ethereum} from './utils/web3';
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.use('/accounts', AccountRouters);
 app.use('/wallets', WalletRouters);
 app.use('/transactions', TransactionRouters);
 app.use('/blocks', BlockRouters);
+app.use('/explorer', ExplorerRouters);
 
 
 // server run

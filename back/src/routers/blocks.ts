@@ -1,9 +1,7 @@
-import express from 'express';
-import { NextFunction, Request, Response } from 'express';
-import { getManager } from 'typeorm';
+import express, { NextFunction, Request, Response } from 'express';
 import { MoonbeamBlockEntity } from '../entities';
 import { BadRequest } from '../utils/httpError';
-import {ethereum, web3} from '../utils/web3';
+import { ethereum } from '../utils/web3';
 
 const router = express.Router();
 
