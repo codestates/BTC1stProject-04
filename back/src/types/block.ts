@@ -28,5 +28,13 @@
  */
 
 export interface MoonbeamBlock {
-    hash: string,
+    number: number;
+    hash: string;
+    miner: string;
+    extraData: string;
+    gasLimit: number;
+    gasUsed: number;
+    baseFeePerGas?: number;
+    transactions: string[];
+    createdAt: Date;
 }
