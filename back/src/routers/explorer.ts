@@ -95,7 +95,7 @@ router.get('/transactions/:transactionId/receipt', async function(req: Request, 
   }
 });
 
-// 최신 트랜잭션 20개 보여주기
+// 최신 블럭 20개 보여주기
 router.get('/blocks/latest', async function(req: Request, res: Response, next: NextFunction) {
   try {
     const latestBlocksInDb = await MoonbeamTestnetBlockEntity.find({
@@ -113,7 +113,7 @@ router.get('/blocks/latest', async function(req: Request, res: Response, next: N
   }
 });
 
-// 특정 트랜잭션 정보 겟
+// 특정 블럭 정보 겟
 router.get('/blocks/:blockId', async function(req: Request, res: Response, next: NextFunction) {
   const {blockId} = req.params;
   if(!blockId){
