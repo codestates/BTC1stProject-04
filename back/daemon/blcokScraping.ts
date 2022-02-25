@@ -1,5 +1,6 @@
 import { BlockTransactionString } from 'web3-eth';
 import {MoonbeamTestnetBlockEntity} from '../src/entities';
+import {sleep} from './utils';
 import {ethereum} from './web3';
 
 export default async function main() {
@@ -20,6 +21,10 @@ export default async function main() {
     try {
       targetBlock = await ethereum.getBlock(startBlockNumber);
     } catch (err) {
+      if (err.data === null) {
+        console.log(startBlockNumber, 'block empty!')
+        break;
+      }
       console.error(`blockNumber: ${startBlockNumber} ) : can not get blockinfo from network`);
       throw new Error(err);
     }
@@ -51,10 +56,4 @@ export default async function main() {
   }
 
   return 1;
-}
-
-async function sleep(ms: number) {
-  return new Promise(function(reslove, reject) {
-      setTimeout(reslove, ms);
-  });
 }

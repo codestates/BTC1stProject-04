@@ -15,8 +15,11 @@ export class MoonbeamTransactionEntity extends BaseEntity implements MoonbeamTra
   @Column('varchar', {comment: '발신 주소'})
   from: string;
   
-  @Column('varchar', {comment: '수신 주소'})
+  @Column('varchar', {nullable: true, comment: '수신 주소'})
   to: string | null;
+
+  @Column('varchar', {nullable: true, comment: ''})
+  creates: string | null;
   
   @Column('varchar', {comment: '송금액'})
   value: string;

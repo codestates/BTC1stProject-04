@@ -1,4 +1,5 @@
 import {MoonbeamTestnetTransactionEntity, MoonbeamTestnetBlockEntity} from '../src/entities';
+import {sleep} from './utils';
 import {ethereum} from './web3';
 
 export default async function main() {
@@ -58,10 +59,4 @@ export default async function main() {
   }
 
   return 1;
-}
-
-async function sleep(ms: number) {
-  return new Promise(function(reslove, reject) {
-      setTimeout(reslove, ms);
-  });
 }
