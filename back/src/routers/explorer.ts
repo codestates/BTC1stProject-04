@@ -26,7 +26,7 @@ router.get('/network', async function(req: Request, res: Response, next: NextFun
 });
 
 // 최신 트랜잭션 20개 보여주기
-router.get('transactions/latest', async function(req: Request, res: Response, next: NextFunction) {
+router.get('/transactions/latest', async function(req: Request, res: Response, next: NextFunction) {
   try {
 
   } catch(err) {
@@ -36,7 +36,7 @@ router.get('transactions/latest', async function(req: Request, res: Response, ne
 });
 
 // 특정 트랜잭션 정보 겟
-router.get('transactions/:transactionId', async function(req: Request, res: Response, next: NextFunction) {
+router.get('/transactions/:transactionId', async function(req: Request, res: Response, next: NextFunction) {
   try {
 
   } catch(err) {
@@ -46,7 +46,7 @@ router.get('transactions/:transactionId', async function(req: Request, res: Resp
 });
 
 // 특정 트랜잭션 영수증 정보 겟
-router.get('transactions/:transactionId/recept', async function(req: Request, res: Response, next: NextFunction) {
+router.get('/transactions/:transactionId/recept', async function(req: Request, res: Response, next: NextFunction) {
   const {transactionId} = req.params;
   if(!transactionId){
     return next(new BadRequest('트랜잭션 아이디가 없습니다.'));
@@ -63,7 +63,7 @@ router.get('transactions/:transactionId/recept', async function(req: Request, re
 });
 
 // 최신 트랜잭션 20개 보여주기
-router.get('blocks/latest', async function(req: Request, res: Response, next: NextFunction) {
+router.get('/blocks/latest', async function(req: Request, res: Response, next: NextFunction) {
   try {
 
   } catch(err) {
@@ -73,7 +73,7 @@ router.get('blocks/latest', async function(req: Request, res: Response, next: Ne
 });
 
 // 특정 트랜잭션 정보 겟
-router.get('blocks/:blockId', async function(req: Request, res: Response, next: NextFunction) {
+router.get('/blocks/:blockId', async function(req: Request, res: Response, next: NextFunction) {
   try {
 
   } catch(err) {
