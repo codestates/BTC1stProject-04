@@ -39,6 +39,13 @@
     - 서버 프레임워크: express
     - ORM: typeorm (active-record)
     - DB: mysql8
+ - daemon
+    - back/daemon 참고
+    - 서버 환경과 별개로, moonbeam testnet에서 데이터를 긁어옴 처리
+    - script를 통해, block -> transactoin 돌면서 데이터 스크랩핑
+    - 디비에 쌓여있는 것 다음 블록 및 트랜잭션부터 데이터 스크랩핑 시작 처리
+    - 데이터 다 긁어올 경우, exponenetial backoff 따라 재실행 (재귀)
+    - pm2 붙이지 않고, ts-node를 통해 foreground 실행 처리
 
 ## APIS
  - /
