@@ -7,13 +7,10 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">4팀</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            <a class="navbar-brand" href="/wallet">4팀</a>
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown button
+                        Menu
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
                         <li><a class="dropdown-item active" href="/">Main</a></li>
@@ -31,14 +28,57 @@
           <div class="card-body">
             <h5 class="card-title">메인넷 접속 페이지</h5>
             <p class="card-text">분산된 웹이 다음을 대기 중 입니다.</p>
-              <div style="padding-bottom: 1%">
-                <input type="text" placeholder="암호" />
+              <div style="padding-bottom: 0%">
+                  <em  style="width: 10%">ID : </em><input type="text" placeholder="아이디" />
+                  <div style="padding-top: 1vh" />
+                  <em  style="width: 10%">PW : </em><input type="text" placeholder="암호" />
+                  <div style="padding-top: 1vh" />
               </div>
-            <a href="/wallet" class="btn btn-primary">잠금 해제</a>
+            <a href="/wallet" class="btn btn-primary" onclick="alert('니모닉 코드')">잠금 해제</a>
+            <div style="padding-top: 1vh" />
           </div>
-          <div class="card-footer text-muted">
-            비밀번호를 복구하려면 <a href="/">여기</a>를 클릭하세요.
-          </div>
+            <div class="card-footer text-muted">
+                비밀번호를 복구하려면
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  여기
+                </button>를 클릭하세요.
+                <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                      ...
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">비밀번호 복구</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">니모닉 코드</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                      </div>
+                        <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">바꿀 비밀번호</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
     </nav>
 </body>

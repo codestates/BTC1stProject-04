@@ -7,13 +7,10 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">4팀</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            <a class="navbar-brand" href="/wallet">4팀</a>
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown button
+                        Menu
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
                         <li><a class="dropdown-item" href="/">Main</a></li>
@@ -23,26 +20,79 @@
             </div>
         </div>
     </nav>
-    <nav style="padding-top:10%;">
+    <nav style="padding-top:5%;">
         <div class="card text-center"  style="width: 50%;left:25%;">
           <div class="card-header">
             Network 번호 (지갑번호)
           </div>
           <div class="card-body">
-            <div class="card-title"><img width="10%" height="10%" src="https://styles.redditmedia.com/t5_3gtgj/styles/communityIcon_u0nji772i7f51.jpg?width=256&format=pjpg&s=ea3b19bab235d3ce68d6481d16c3e31311c0d1e5"></div>
+            <div class="card-title"><img width="20%" height="20%" src="https://styles.redditmedia.com/t5_3gtgj/styles/communityIcon_u0nji772i7f51.jpg?width=256&format=pjpg&s=ea3b19bab235d3ce68d6481d16c3e31311c0d1e5"></div>
             <h5 class="card-title">0 BDOT</h5>
-            <p class="card-text"><button>구매</button><button>보내기</button><button>스왑</button></p>
-
-            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-              <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-              <label class="btn btn-outline-primary" for="btnradio1">자산</label>
-
-              <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-              <label class="btn btn-outline-primary" for="btnradio2">활동</label>
+            <p class="card-text"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              보내기
+            </button></p>
+              <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">보내기</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">계좌 정보</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                      </div>
+                        <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">금액</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div>
-              내용
+            <ul class="nav justify-content-center nav-pills mb-3" id="pills-tab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">자산</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">활동</button>
+              </li>
+            </ul>
+            <div class="tab-content  nav-justified" id="pills-tabContent" style="justify-content: center;">
+              <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <table class="table">
+                    <tr>
+                        <th>번호</th>
+                        <th>자산</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1,000</td>
+                    </tr>
+                </table>
+              </div>
+              <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <table class="table">
+                    <tr>
+                        <th>번호</th>
+                        <th>트랜잭션</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>abcde</td>
+                    </tr>
+                </table>
+              </div>
             </div>
+          </div>
         </div>
     </nav>
 </body>
