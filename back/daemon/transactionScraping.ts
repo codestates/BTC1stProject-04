@@ -3,7 +3,7 @@ import {sleep} from './utils';
 import {ethereum} from './web3';
 
 export default async function main() {
-  let startBlockNumber = 1750000;
+  let startBlockNumber = 1760000;
   // db 데이터부터 다시 시작
   const [latestTransactionInDb] = await MoonbeamTestnetTransactionEntity.find({
     order: {id : 'DESC'},
