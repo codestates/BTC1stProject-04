@@ -3,7 +3,7 @@ import {MoonbeamTestnetBlockEntity} from '../src/entities';
 import {ethereum} from './web3';
 
 export default async function main() {
-  let startBlockNumber = 0;
+  let startBlockNumber = 1750000; // 시간상 해당 블록부터
   // db 데이터부터 다시 시작
   const latestBlockInDb = await MoonbeamTestnetBlockEntity.find({
     order: {id : 'DESC'},
@@ -29,7 +29,7 @@ export default async function main() {
         console.log(`blockNumber: ${startBlockNumber} ) : noblockData`);
         break;
       }
-      await sleep(500);
+      await sleep(300);
       const blockForDb = MoonbeamTestnetBlockEntity.create({
         number: targetBlock.number,
         hash: targetBlock.hash,
