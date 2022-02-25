@@ -1,9 +1,11 @@
+import _ from 'lodash';
+import {getConnection} from 'typeorm';
 import {MoonbeamTestnetTransactionEntity, MoonbeamTestnetBlockEntity} from '../src/entities';
 import {sleep} from './utils';
 import {ethereum} from './web3';
 
 export default async function main() {
-  let startBlockNumber = 1760000;
+  let startBlockNumber = 1760200;
   // db 데이터부터 다시 시작
   const [latestTransactionInDb] = await MoonbeamTestnetTransactionEntity.find({
     order: {id : 'DESC'},
@@ -34,19 +36,25 @@ export default async function main() {
     }
 
     console.log(`start transaction scraping from block: ${startBlockNumber}, TransactionIndex: ${(targetIndex === -1) ? 0 : targetIndex}`);
+
+    const chunkedTrxIds = _.chunk(tartgetTransactionIds, 10)
     try {
-      for await (const transactionId of tartgetTransactionIds) {
-        const transaction = await ethereum.getTransaction(transactionId);
-        const transactionForDb = MoonbeamTestnetTransactionEntity.create({
-          blockNumber: transaction.blockNumber,
-          hash: transaction.hash,
-          from: transaction.from,
-          to: transaction.to,
-          value: transaction.value,
-          gasPrice: transaction.gasPrice,
-          createdAt: (transaction as any).createdAt,
+      for await (const transactionIds of chunkedTrxIds) {
+        const promises = _.map(transactionIds, trxId => ethereum.getTransaction(trxId));
+        const transactions = await Promise.all(promises);
+
+        const transactionsForDb = _.map(transactions, transaction => {
+          return MoonbeamTestnetTransactionEntity.create({
+            blockNumber: transaction.blockNumber,
+            hash: transaction.hash,
+            from: transaction.from,
+            to: transaction.to,
+            value: transaction.value,
+            gasPrice: transaction.gasPrice,
+            createdAt: (transaction as any).createdAt,
+          })
         })
-        await MoonbeamTestnetTransactionEntity.save(transactionForDb);
+        await bulkInsertWithTypeorm(transactionsForDb);
 
         await sleep(300);
       }
@@ -59,4 +67,14 @@ export default async function main() {
   }
 
   return 1;
+}
+
+async function bulkInsertWithTypeorm(entities: MoonbeamTestnetTransactionEntity[]) {
+  const dbConnection = getConnection();
+  await dbConnection
+    .createQueryBuilder()
+    .insert()
+    .into(MoonbeamTestnetTransactionEntity)
+    .values(entities)
+    .execute();
 }
