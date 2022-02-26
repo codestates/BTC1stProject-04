@@ -113,7 +113,7 @@
  - /explorer:
    - /network (get): 네트워크 기본 상태 정보
       - 사용처: 연결 된 네트워크의 기본적인 정보를 확인할 때 사용
-      - output: {chainId: number, node: string, blockNumber: number, protocalVersion: string}
+      - output: {chainId: number, node: string, blockNumber: number, protocalVersion: string, dbTransactionCount: number, dbBlockCount: number}
    - /transactions/latest (get): 최신 트랜잭션 20개 겟
       - 사용처: 익스플로러에서 latest transactions 출력시 사용
       - output: {latestTransactions: MoonbeamTestnetTransactionEntity[]} (`src/entities/testnet-transaction.entity.ts`)
