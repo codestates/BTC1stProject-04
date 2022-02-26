@@ -5,13 +5,13 @@ import {sleep} from './utils';
 import {ethereum} from './web3';
 
 export default async function main() {
-  let startBlockNumber = 1760200;
+  let startBlockNumber = 1764982;
   // db 데이터부터 다시 시작
   const [latestTransactionInDb] = await MoonbeamTestnetTransactionEntity.find({
     order: {id : 'DESC'},
     take: 1,
   })
-  if (latestTransactionInDb && latestTransactionInDb && latestTransactionInDb?.blockNumber) {
+  if (latestTransactionInDb && latestTransactionInDb && latestTransactionInDb.blockNumber) {
     startBlockNumber = latestTransactionInDb.blockNumber;
   }
   

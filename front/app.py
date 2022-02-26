@@ -39,7 +39,6 @@ def find():
     response = requests.request("POST", url, headers=headers, data=payload)
     return jsonify(response.json())
 
-
 @app.route('/wallet', methods=["GET"])
 def get_wallet():
     return render_template("wallet/index.html")
@@ -49,6 +48,25 @@ def find_account():
     params = json.loads(request.get_data(), encoding='utf-8')
     url = "http://localhost:4004/accounts/%s" % (params['account'])
     response = requests.request("GET", url, headers=headers)
+    return jsonify(response.json())
+
+@app.route('/wallet/transactions', methods=["POST"])
+def find_transactions():
+    params = json.loads(request.get_data(), encoding='utf-8')
+    url = "http://localhost:4004/accounts/%s/transactions" % (params['account'])
+    response = requests.request("GET", url, headers=headers)
+    return jsonify(response.json())
+
+@app.route('/transactions', methods=["POST"])
+def send_transactions():
+    params = json.loads(request.get_data(), encoding='utf-8')
+    url = "http://localhost:4004/transactions"
+    payload = json.dumps({
+        "addressFrom": params["addressFrom"],
+        "addressTo": params["addressTo"],
+        "amount": params["amount"]
+    })
+    response = requests.request("POST", url, headers=headers, data=payload)
     return jsonify(response.json())
 
 @app.route('/explorer', methods=["GET"])

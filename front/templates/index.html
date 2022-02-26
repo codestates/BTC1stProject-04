@@ -125,9 +125,21 @@
                   })
                   .catch(error => console.log('error', error));
               }else{
-                  // console.log(result["mnemonic"])
-                  alert("신규가입) 니모닉 코드(기억해주세요.) : " + result["mnemonic"]);
-                  location.href="/wallet";
+                  alert("가입) 니모닉 코드(기억해주세요.) : " + result["mnemonic"]);
+                  var requestOptions = {
+                      method: 'POST',
+                      headers: myHeaders,
+                      body: raw,
+                      redirect: 'follow'
+                    };
+                    fetch("http://localhost:5000/login", requestOptions)
+                      .then(response => response.text())
+                      .then(result => {
+                          result = JSON.parse(result)
+                          sessionStorage.setItem("accounts", JSON.stringify(result["accounts"]))
+                          location.href="/wallet";
+                      })
+                      .catch(error => console.log('error', error));
               }
           })
           .catch(error => console.log('error', error));
