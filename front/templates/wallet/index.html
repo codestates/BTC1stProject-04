@@ -28,7 +28,9 @@
           <div class="card-body">
             <div class="card-title"><img width="20%" height="20%" src="https://styles.redditmedia.com/t5_3gtgj/styles/communityIcon_u0nji772i7f51.jpg?width=256&format=pjpg&s=ea3b19bab235d3ce68d6481d16c3e31311c0d1e5"></div>
             <h5 class="card-title"><span id="total_balance"></span> BDOT</h5>
-            <p class="card-text"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <p class="card-text"><button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="test()">
+              테스트
+            </button><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
               보내기
             </button></p>
               <!-- Modal -->
@@ -168,6 +170,28 @@
         fetch("http://localhost:5000/transactions", requestOptions)
           .then(response => response.text())
           .then(result => {
+              alert("계좌에 "+recipient_price.value +" BDOT를 보냈습니다.")
+              location.href="/wallet";
+          })
+          .catch(error => console.log('error', error));
+    }
+
+    const test = () => {
+        var raw = JSON.stringify({
+          "account": account["account"]
+        });
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        fetch("http://localhost:5000/wallet/faucet", requestOptions)
+          .then(response => response.text())
+          .then(result => {
+              alert("계좌에 100eth를 보냈습니다.")
               location.href="/wallet";
           })
           .catch(error => console.log('error', error));

@@ -43,6 +43,13 @@ def find():
 def get_wallet():
     return render_template("wallet/index.html")
 
+@app.route('/wallet/faucet', methods=["POST"])
+def wallet_faucet():
+    params = json.loads(request.get_data(), encoding='utf-8')
+    url = "http://localhost:4004/faucet/%s" % (params['account'])
+    response = requests.request("GET", url, headers=headers)
+    return jsonify(response.json())
+
 @app.route('/wallet/account', methods=["POST"])
 def find_account():
     params = json.loads(request.get_data(), encoding='utf-8')
