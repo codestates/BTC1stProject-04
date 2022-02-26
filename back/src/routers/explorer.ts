@@ -15,8 +15,10 @@ router.get('/network', async function(req: Request, res: Response, next: NextFun
 
     const protocalVersion = await ethereum.getProtocolVersion();
 
+    const dbTransactionCount = await MoonbeamTestnetTransactionEntity.count();
+    const dbBlockCount = await MoonbeamTestnetBlockEntity.count();
 
-    res.send({ chainId, node, blockNumber, protocalVersion });
+    res.send({ chainId, node, blockNumber, protocalVersion, dbTransactionCount, dbBlockCount });
   } catch(err) {
     console.log(err);
     throw new Error(err);
