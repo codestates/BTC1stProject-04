@@ -89,6 +89,11 @@
       - input: params: {accountAddress: account주소}
       - output: body: {balance: string }
 
+   - /:accountAddress/transactions (get) : 특정 계정의 트랜잭션 정보 겟
+      - 사용처: 로그인 직후, 활동 내역
+      - input: params: {accountAddress: account주소}
+      - output: body: {receiveTransactions: TransactionEntity[], sendTransactions: TransactionEntity[]}
+
  - /transactions:
    - / (post): 트랜잭션 생성
       - 사용처: 송금 기능에 사용

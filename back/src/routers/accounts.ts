@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-import {AccountEntity} from '../entities';
+import {AccountEntity, MoonbeamTransactionEntity} from '../entities';
 import {ethereum} from '../utils/web3';
 import {BadRequest} from '../utils/httpError';
 
@@ -35,6 +35,32 @@ router.get('/:accountAddress/balance', async function(req: Request, res: Respons
   try {
     const balance = await ethereum.getBalance(accountAddress);
     res.send({ balance });
+  } catch(err) {
+    console.error(err);
+    return next(err);
+  }
+});
+
+// 계정 관련 트랜잭션 확인
+router.get('/:accountAddress/transactions', async function(req: Request, res: Response, next: NextFunction) {
+  const {accountAddress} = req.params;
+  if (!accountAddress) {
+    return next(new BadRequest('계정주소가 없습니다.'))
+  }
+  try {
+    const [receiveTransactions, sendTransactions] = await Promise.all([
+        MoonbeamTransactionEntity.find({
+        where: {
+          from: accountAddress,
+        }
+      }),
+        MoonbeamTransactionEntity.find({
+        where: {
+          to: accountAddress,
+        }
+      }),
+    ]);
+    res.send({ receiveTransactions, sendTransactions });
   } catch(err) {
     console.error(err);
     return next(err);
