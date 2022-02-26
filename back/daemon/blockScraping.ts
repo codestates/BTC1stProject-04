@@ -1,7 +1,7 @@
 import { BlockTransactionString } from 'web3-eth';
-import {MoonbeamTestnetBlockEntity} from '../src/entities';
-import {sleep} from './utils';
-import {ethereum} from './web3';
+import { MoonbeamTestnetBlockEntity } from '../src/entities';
+import { sleep } from './utils';
+import { ethereum } from './web3';
 
 export default async function main() {
   let startBlockNumber = 1760200; // 시간상 해당 블록부터

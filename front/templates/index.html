@@ -29,12 +29,12 @@
             <h5 class="card-title">메인넷 접속 페이지</h5>
             <p class="card-text">분산된 웹이 다음을 대기 중 입니다.</p>
               <div style="padding-bottom: 0%">
-                  <em  style="width: 10%">ID : </em><input type="text" placeholder="아이디" />
+                  <em  style="width: 10%">ID : </em><input id="id" type="text" placeholder="아이디" />
                   <div style="padding-top: 1vh" />
-                  <em  style="width: 10%">PW : </em><input type="text" placeholder="암호" />
+                  <em  style="width: 10%">PW : </em><input id="pw" type="text" placeholder="암호" />
                   <div style="padding-top: 1vh" />
               </div>
-            <a href="/wallet" class="btn btn-primary" onclick="alert('니모닉 코드')">잠금 해제</a>
+            <button class="btn btn-primary" onclick="login()">잠금 해제</button>
             <div style="padding-top: 1vh" />
           </div>
             <div class="card-footer text-muted">
@@ -64,17 +64,17 @@
                     <form>
                       <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">니모닉 코드</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <input type="text" class="form-control" id="mnemonic">
                       </div>
                         <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">바꿀 비밀번호</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <input type="text" class="form-control" id="cpassword">
                       </div>
                     </form>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" onclick="find()">Password Changes</button>
                   </div>
                 </div>
               </div>
@@ -84,4 +84,78 @@
 </body>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script>
+    const login = () => {
+        var id = document.getElementById("id").value;
+        var pw = document.getElementById("pw").value;
+        // console.log(id, pw);
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          "username": id,
+          "password": pw
+        });
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        fetch("http://localhost:5000/join", requestOptions)
+          .then(response => response.text())
+          .then(result => {
+              result = JSON.parse(result)
+              if(result["code"] == 400){
+                var requestOptions = {
+                  method: 'POST',
+                  headers: myHeaders,
+                  body: raw,
+                  redirect: 'follow'
+                };
+                fetch("http://localhost:5000/login", requestOptions)
+                  .then(response => response.text())
+                  .then(result => {
+                      alert("접속) 월릿 페이지로 이동합니다.")
+                      result = JSON.parse(result)
+                      sessionStorage.setItem("accounts", JSON.stringify(result["accounts"]))
+                      location.href="/wallet";
+                  })
+                  .catch(error => console.log('error', error));
+              }else{
+                  // console.log(result["mnemonic"])
+                  alert("신규가입) 니모닉 코드(기억해주세요.) : " + result["mnemonic"]);
+                  location.href="/wallet";
+              }
+          })
+          .catch(error => console.log('error', error));
+    }
+
+    const find = () => {
+        var mnemonic = document.getElementById("mnemonic").value;
+        var cpassword = document.getElementById("cpassword").value;
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          "mnemonic": mnemonic,
+          "passwordToChange": cpassword
+        });
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        fetch("http://localhost:5000/find", requestOptions)
+          .then(response => response.text())
+          .then(result => alert(result["username"] + "의 비밀번호가 변경되었습니다."))
+          .catch(error => console.log('error', error));
+    }
+</script>
 </html>
