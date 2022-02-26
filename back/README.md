@@ -95,12 +95,35 @@
       - input(body): {addressFrom: string, addressTo: string, amount: string | number}
       - output: 생성된 트랜잭션의 hash
    - /:transactionId (get): 특정 트랜잭션의 정보 겟
-      - 사용처: 익스플로러에서 특정 트랜잭션의 정보를 보여줄 때 사용
+      - 사용처: 월렛에서 특정 트랜잭션의 정보를 보여줄 때 사용
       - input(params): {transactionId: 트랜잭션 주소}
       - output: MoonbeamTransactionEntity (`src/entities/transaction.entity.ts`)
 
  - /blocks:
    - /:blockNumber (get): 특정 블록의 정보 겟
-      - 사용처: 익스플로러에서 특정 블록의 정보를 보여줄 때 사용
+      - 사용처: 월렛에서 특정 블록의 정보를 보여줄 때 사용
       - input(params): {blockNumber: 블럭 번호}
       - output: MoonbeamBlockEntity (`src/entities/block.entity.ts`)
+
+ - /explorer:
+   - /network (get): 네트워크 기본 상태 정보
+      - 사용처: 연결 된 네트워크의 기본적인 정보를 확인할 때 사용
+      - output: {chainId: number, node: string, blockNumber: number, protocalVersion: string}
+   - /transactions/latest (get): 최신 트랜잭션 20개 겟
+      - 사용처: 익스플로러에서 latest transactions 출력시 사용
+      - output: {latestTransactions: MoonbeamTestnetTransactionEntity[]} (`src/entities/testnet-transaction.entity.ts`)
+   - /transactions/:transactionId (get): 특정 트랜잭션 정보 겟
+      - 사용처: 익스플로러에서 특정 트랜잭션 정보를 보여줄 때 사용
+      - input(params): {transactionId: 트랜잭션 주소}
+      - output: {transaction: MoonbeamTestnetTransactionEntity} (`src/entities/testnet-transaction.entity.ts`)
+   - /transactions/:transactionId/receipt (get): 특정 트랜잭션 영수증 정보 겟
+      - 사용처: 익스플로러에서 특정 트랜잭션 디테일한 정보를 보여줄 때 사용
+      - input(params): {transactionId: 트랜잭션 주소}
+      - output: {receipt: TransactionReceipt}
+   - /blocks/latest (get): 최신 블럭 20개 겟
+      - 사용처: 익스플로러에서 latest blocks 출력시 사용
+      - output: {latestBlocks: MoonbeamTestnetBlockEntity[]} (`src/entities/testnet-block.entity.ts`)
+   - /blocks/:blockId (get): 특정 블럭 정보 겟
+      - 사용처: 익스플로러에서 특정 블럭 정보를 보여줄 때 사용
+      - input(params): {blockId: 블럭 주소}
+      - output: {block: MoonbeamTestnetBlockEntity} (`src/entities/testnet-block.entity.ts`)

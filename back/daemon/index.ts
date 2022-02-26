@@ -1,9 +1,9 @@
-import {createConnection, getConnection} from 'typeorm';
-import{typeormConfig} from '../src/typeorm/config';
-import {sleep} from './utils';
-
-import scrapingBlocks from './blcokScraping';
+import { createConnection, getConnection } from 'typeorm';
+import { typeormConfig } from '../src/typeorm/config';
+import scrapingBlocks from './blockScraping';
 import scrapingTransactions from './transactionScraping';
+import { sleep } from './utils';
+
 
 const getSleepTime = setExponenetialBackOff(2000);
 main();
