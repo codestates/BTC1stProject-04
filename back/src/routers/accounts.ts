@@ -52,12 +52,14 @@ router.get('/:accountAddress/transactions', async function(req: Request, res: Re
         MoonbeamTransactionEntity.find({
         where: {
           from: accountAddress,
-        }
+        },
+        order: {id: 'DESC'}
       }),
         MoonbeamTransactionEntity.find({
         where: {
           to: accountAddress,
-        }
+        },
+        order: {id: 'DESC'}
       }),
     ]);
     res.send({ receiveTransactions, sendTransactions });
