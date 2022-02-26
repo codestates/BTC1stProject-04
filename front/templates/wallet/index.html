@@ -42,18 +42,18 @@
                   <div class="modal-body">
                     <form>
                       <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">계좌 정보</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <label for="recipient-name" class="col-form-label">(보낼)계좌 정보</label>
+                        <input type="text" class="form-control" id="recipient_account" value="0xf49Adfe551dC0631f99bE86bFFfD6ce3540F92Aa">
                       </div>
                         <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">금액(BDOT)</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <input type="text" class="form-control" id="recipient_price" placeholder="0">
                       </div>
                     </form>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Send</button>
+                    <button type="button" class="btn btn-primary" onclick="send()">Send</button>
                   </div>
                 </div>
               </div>
@@ -73,21 +73,18 @@
                         <th>번호</th>
                         <th>자산(BDOT)</th>
                     </tr>
-                    <tr>
+                    <tr style='font-size:5px'>
                         <td>1</td>
                         <td id="total_balance2"></td>
                     </tr>
                 </table>
               </div>
               <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <table class="table">
+                <table class="table" id="transactions">
+
                     <tr>
-                        <th>번호</th>
-                        <th>트랜잭션</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>abcde</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </table>
               </div>
@@ -100,10 +97,12 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script>
     var account = JSON.parse(sessionStorage.getItem("accounts"))[0];
-    console.log(account);
     var account_num = document.getElementById("account");
     var total_balance = document.getElementById("total_balance");
     var total_balance2 = document.getElementById("total_balance2");
+    var transactions = document.getElementById("transactions");
+    var transaction_html = "<tr><th>번호</th><th>트랜잭션</th></tr>";
+    transactions.innerHTML = transaction_html;
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -122,11 +121,56 @@
       .then(response => response.text())
       .then(result => {
           result = JSON.parse(result);
-          console.log(result);
           account_num.textContent = result['account']['account'].slice(0,7)+"..."+result['account']['account'].slice(result['account']['account'].length-5,result['account']['account'].length);
           total_balance.textContent = result['account']['balance'];
           total_balance2.textContent = result['account']['balance'];
       })
       .catch(error => console.log('error', error));
+
+    var raw = JSON.stringify({
+      "account": account["account"]
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("http://localhost:5000/wallet/transactions", requestOptions)
+      .then(response => response.text())
+      .then(result => {
+          result = JSON.parse(result)['receiveTransactions'].slice(0,3);
+          console.log(result);
+          for (var i=0;i<result.length;i++){
+            transaction_html += "<tr style='font-size:5px'><th>"+result[i].blockNumber+"</th><th>"+result[i].hash.toString().slice(0,7)+"..."+"</th></tr>";
+            transactions.innerHTML = transaction_html;
+          }
+      })
+      .catch(error => console.log('error', error));
+
+    const send = () => {
+        var recipient_account = document.getElementById("recipient_account");
+        var recipient_price = document.getElementById("recipient_price");
+        var raw = JSON.stringify({
+          "addressFrom": account["account"],
+          "addressTo": recipient_account.value,
+          "amount": recipient_price.value
+        });
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        fetch("http://localhost:5000/transactions", requestOptions)
+          .then(response => response.text())
+          .then(result => {
+              location.href="/wallet";
+          })
+          .catch(error => console.log('error', error));
+    }
 </script>
 </html>

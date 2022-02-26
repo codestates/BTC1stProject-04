@@ -9,7 +9,7 @@
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run --config src/migrations/migration-target.json",
     "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate --config src/migrations/migration-target.json -d ./src/migrations/histories/",
     "docker:on": "docker-compose up -d",
-    "daemon:on": "npx ts-node daemon"
+    "daemon:on": "ts-node daemon"
   },
   "keywords": [],
   "author": "",
