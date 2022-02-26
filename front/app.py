@@ -71,7 +71,35 @@ def send_transactions():
 
 @app.route('/explorer', methods=["GET"])
 def explorer():
-    return render_template("explorer/index.html")
+    url = "http://localhost:4004/explorer/network"
+    response = requests.request("GET", url, headers=headers)
+    return render_template("explorer/index.html", data=response.json())
+
+@app.route('/explorer/transactions', methods=["POST"])
+def explorer_transaction():
+    params = json.loads(request.get_data(), encoding='utf-8')
+    url = "http://localhost:4004/explorer/transactions/%s" % (params['transactionId'])
+    response = requests.request("GET", url, headers=headers)
+    return jsonify(response.json())
+
+@app.route('/explorer/transactions/latest', methods=["GET"])
+def explorer_trans_late():
+    url = "http://localhost:4004/explorer/transactions/latest"
+    response = requests.request("GET", url, headers=headers)
+    return jsonify(response.json())
+
+@app.route('/explorer/blocks', methods=["POST"])
+def explorer_block():
+    params = json.loads(request.get_data(), encoding='utf-8')
+    url = "http://localhost:4004/explorer/blocks/%s" % (params['number'])
+    response = requests.request("GET", url, headers=headers)
+    return jsonify(response.json())
+
+@app.route('/explorer/blocks/latest', methods=["GET"])
+def explorer_blocks_late():
+    url = "http://localhost:4004/explorer/blocks/latest"
+    response = requests.request("GET", url, headers=headers)
+    return jsonify(response.json())
 
 if __name__ == '__main__':
     app.run(debug=True)
