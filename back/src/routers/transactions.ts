@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { MoonbeamTransactionEntity, WalletEntity } from '../entities';
+import { AccountEntity, MoonbeamTransactionEntity, WalletEntity } from '../entities';
 import { BadRequest } from '../utils/httpError';
 import { ethereum } from '../utils/web3';
 
@@ -17,8 +17,11 @@ router.post('/', async function(req: Request, res: Response, next: NextFunction)
   }
 
   try {
-    const senderWallet = await WalletEntity.findOne({id: addressFrom});
-    if(!senderWallet){
+    const senderInfo = await AccountEntity.findOne({
+      where: {account: addressFrom},
+      relations: ['wallet'],
+    });
+    if(!senderInfo){
       return next(new BadRequest('잘못된 발신 주소 입니다.'));
     }
 
@@ -28,7 +31,7 @@ router.post('/', async function(req: Request, res: Response, next: NextFunction)
         to: addressTo,
         value: amount,
       },
-      senderWallet.praivateKey
+      senderInfo.wallet.praivateKey
     );
 
     const createReceipt = await ethereum.sendSignedTransaction(createTransaction.rawTransaction!);
