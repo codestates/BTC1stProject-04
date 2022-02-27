@@ -167,8 +167,10 @@
         fetch("http://localhost:5000/find", requestOptions)
           .then(response => response.text())
           .then(result => {
-              result = JSON.parse(result)
+              result = JSON.parse(result);
+              console.log(result);
               alert(result["username"] + "의 비밀번호가 변경되었습니다.")
+              location.href="/wallet";
           })
           .catch(error => console.log('error', error));
     }
