@@ -91,7 +91,7 @@ router.post('/login', async function(req: Request, res: Response, next: NextFunc
     console.log(
       `api: [post] /wallets/login\n`
     + `input: username:${username}, password:${password}\n`
-    + `output: accounts:${wallet.accounts?.join(',')}\n\n`
+    + `output: accounts:${wallet.accounts && wallet.accounts.join(',')}\n\n`
     )
     res.send({ accounts: wallet.accounts });
   } catch(err) {
