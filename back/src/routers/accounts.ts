@@ -62,6 +62,12 @@ router.get('/:accountAddress/transactions', async function(req: Request, res: Re
         order: {id: 'DESC'}
       }),
     ]);
+    console.log(
+      `api: [post] /accounts/:accountAddress/transactions\n`
+    + `input: accountAddress:${accountAddress}\n`
+    + `output: receiveTransactions:${receiveTransactions}\n`
+    + `      : sendTransactions:${sendTransactions}\n\n`
+    )
     res.send({ receiveTransactions, sendTransactions });
   } catch(err) {
     console.error(err);

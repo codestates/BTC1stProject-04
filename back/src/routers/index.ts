@@ -13,14 +13,16 @@ router.get('/', function(req: Request, res: Response, next: NextFunction) {
 // 네트워크 기본 상태 정보
 router.get('/network', async function(req: Request, res: Response, next: NextFunction) {
   try {
+    const type = 'LocalNet';
     const chainId = await ethereum.getChainId();
     const node = await ethereum.getNodeInfo();
   
     const blockNumber = await ethereum.getBlockNumber();
-  
+    const protocalVersion = await ethereum.getProtocolVersion();
+
     const currentBlock = await ethereum.getBlock(blockNumber);
 
-    res.send({ chainId, node, blockNumber, currentBlock });
+    res.send({ type, chainId, node, blockNumber, protocalVersion });
   } catch(err) {
     console.log(err);
     throw new Error(err);

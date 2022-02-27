@@ -8,6 +8,7 @@ const router = express.Router();
 // 네트워크 기본 상태 정보
 router.get('/network', async function(req: Request, res: Response, next: NextFunction) {
   try {
+    const type = 'TestNet';
     const chainId = await ethereum.getChainId();
     const node = await ethereum.getNodeInfo();
 
@@ -18,7 +19,7 @@ router.get('/network', async function(req: Request, res: Response, next: NextFun
     const dbTransactionCount = await MoonbeamTestnetTransactionEntity.count();
     const dbBlockCount = await MoonbeamTestnetBlockEntity.count();
 
-    res.send({ chainId, node, blockNumber, protocalVersion, dbTransactionCount, dbBlockCount });
+    res.send({ type, chainId, node, blockNumber, protocalVersion, dbTransactionCount, dbBlockCount });
   } catch(err) {
     console.log(err);
     throw new Error(err);

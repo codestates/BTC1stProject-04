@@ -47,6 +47,11 @@ router.post('/', async function(req: Request, res: Response, next: NextFunction)
       await entityManager.save(AccountEntity, account);
     })
 
+    console.log(
+      `api: [post] /wallets\n`
+    + `input: username:${username}, password:${password}\n`
+    + `output: mnemonic:${mnemonic}\n\n`
+    )
     res.send({ mnemonic });
   } catch(err) {
     console.error(err);
@@ -83,6 +88,11 @@ router.post('/login', async function(req: Request, res: Response, next: NextFunc
       }
     }
 
+    console.log(
+      `api: [post] /wallets/login\n`
+    + `input: username:${username}, password:${password}\n`
+    + `output: accounts:${wallet.accounts?.join(',')}\n\n`
+    )
     res.send({ accounts: wallet.accounts });
   } catch(err) {
     console.error(err);
@@ -116,6 +126,11 @@ router.post('/find', async function(req: Request, res: Response, next: NextFunct
     wallet.salt = salt;
     await wallet.save();
 
+    console.log(
+      `api: [post] /wallets/find\n`
+    + `input: mnemonic:${mnemonic}, passwordToChange:${passwordToChange}\n`
+    + `output: username:${wallet.username}\n\n`
+    )
     res.send({ username: wallet.username });
   } catch(err) {
     console.error(err);

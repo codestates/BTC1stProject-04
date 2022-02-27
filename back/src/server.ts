@@ -40,7 +40,7 @@ createConnection(typeormConfig).then(async () => {
     console.error(err);
     throw new Error('node is not connected!');
   }
-  
+  console.log('node connected');
   app.listen(port, () => {
     console.log(`server start on ${port}`);
   });
