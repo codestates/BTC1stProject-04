@@ -15,6 +15,12 @@ router.get('/:blockNumber', async function(req: Request, res: Response, next: Ne
   try {
     const block = await MoonbeamBlockEntity.findOne({number: +blockNumber});
     if(block){
+      console.log(
+        `API: /blocks/:blockNumber\n`
+      + `Type: [GET]\n`
+      + `Input: blockNumber:${blockNumber}\n`
+      + `Output: block:${JSON.stringify(block, null, 4)}`
+      );
       return res.send(block);
     }
 
@@ -31,6 +37,12 @@ router.get('/:blockNumber', async function(req: Request, res: Response, next: Ne
           transactions: blockInfo.transactions
         });
         blockInDb.save();
+        console.log(
+          `API: /blocks/:blockNumber\n`
+        + `Type: [GET]\n`
+        + `Input: blockNumber:${blockNumber}\n`
+        + `Output: block:${JSON.stringify(blockInDb, null, 4)}`
+        );
         res.send(blockInDb);
       })
       .catch(err =>{

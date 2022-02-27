@@ -47,6 +47,13 @@ router.post('/', async function(req: Request, res: Response, next: NextFunction)
     });
     await transactionInDb.save();
 
+    console.log(
+      `API: /transactions\n`
+    + `Type: [POST]\n`
+    + `Input: addressFrom:${addressFrom}, addressTo:${addressTo}, amount:${amount}\n`
+    + `Output: transactionHash:${createReceipt.transactionHash}`
+    );
+
     res.send({ transactionHash: createReceipt.transactionHash });
   } catch(err) {
     console.log(err);
@@ -64,6 +71,12 @@ router.get('/:transactionId', async function(req: Request, res: Response, next: 
   try {
     const transaction = await MoonbeamTransactionEntity.findOne({hash: transactionId});
     if(transaction){
+      console.log(
+        `API: /transactions/:transactionId\n`
+      + `Type: [GET]\n`
+      + `Input: transactionId:${transactionId}\n`
+      + `Output: transaction:${transaction}`
+      );
       return res.send({ transaction });
     }
 
@@ -82,6 +95,12 @@ router.get('/:transactionId', async function(req: Request, res: Response, next: 
     });
     await transactionInDb.save();
     
+    console.log(
+      `API: /transactions/:transactionId\n`
+    + `Type: [GET]\n`
+    + `Input: transactionId:${transactionId}\n`
+    + `Output: transaction:${transaction}`
+    );
     res.send({ transaction: transactionInDb });
   } catch(err) {
     console.log(err);
